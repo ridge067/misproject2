@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Home — MySite</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <nav class="container">
+    <div class="nav-inner">
+      <div class="logo">MySite</div>
+      <button class="nav-toggle" aria-label="Toggle nav">☰</button>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="hobbies.html">Hobbies</a>
+        <a href="discover.html">Discover</a>
+        <a href="resume.html">Resume</a>
+        <a href="career.html">Career</a>
+        <a href="game.html">Game</a>
+      </div>
+      <button class="dark-mode-toggle" aria-label="Toggle theme">🌓</button>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section style="margin-top:1.5rem;display:flex;gap:2rem;align-items:flex-start">
+      <div style="flex:0 0 40%">
+        <div class="hero-card">
+          <h1>Welcome — Luke Ridgeway</h1>
+          <p class="lead">I'm a passionate professional combining strong technical skills with creative problem solving. Replace this with your professional intro.</p>
+          <div style="display:flex;gap:1rem;align-items:center;margin-top:1rem">
+            <a class="cta" href="resume.html">View Resume</a>
+            <a class="cta" href="career.html" style="background:#10b981">Career Interests</a>
+          </div>
+        </div>
+
+        <div class="hobby" style="margin-top:1.5rem">
+          <img src="images/Snapchat-164561489.jpg" alt="Headshot" class="profile-pic" style="width:250px;height:250px">
+          <div style="margin-top:1rem">
+            <h3>About Me</h3>
+              <p class="muted">My name is Luke Ridgeway, I am 19 years old and go to University of Minnesota Duluth.</p>
+          </div>
+        </div>
+        
+        <div class="card" style="padding:1rem;margin-top:1.5rem">
+          <h3>Welcome Video</h3>
+          <video controls width="100%" height="300" preload="auto" style="background:#000;border-radius:8px;border:2px solid #ccc">
+            <source src="VIDEOS/welcome.mp4" type="video/mp4">
+            <source src="assets/welcome.mp4" type="video/mp4">
+            <source src="VIDEOS/20251016_234551.mp4" type="video/mp4">
+            <p>Video not supported. Please check if the video file exists and is in the correct format.</p>
+          </video>
+          <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--muted)">If video doesn't load, try refreshing the page or check your browser's video support.</p>
+        </div>
+      </div>
+
+      <div style="flex:1">
+        <div class="card" style="padding:2rem;min-height:600px">
+          <h3>My Hobbies</h3>
+          <div class="grid" style="margin-top:1.5rem">
+            <div class="card" style="padding:1.5rem">
+              <img src="IMAGES/20250616_185103.jpg" alt="cars hobby" style="width:100%;height:250px;object-fit:contain;border-radius:8px;margin-bottom:1rem">
+              <h4 style="margin-bottom:0.5rem">Cars & Vehicles</h4>
+              <p>I have a strong interest in vehicles such as cars and motorcycles, here is a photo of my car. I go to lots of car meets and love learning about engines as well as different brands of vehicles.</p>
+            </div>
+            <div class="card" style="padding:1.5rem">
+              <img src="IMAGES/image000001(3).jpg" alt="fishing hobby" style="width:100%;height:250px;object-fit:contain;border-radius:8px;margin-bottom:1rem">
+              <h4 style="margin-bottom:0.5rem">Fishing</h4>
+              <p>I also love to fish, I've fished in places like Hawaii and the Rocky Mountains for all different kinds of species.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-top:1.5rem">
+      <div class="card">
+        <h3>Contact</h3>
+        <p>Email: <a href="mailto:ridge067@d.umn.edu">ridge067@d.umn.edu</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p style="color:var(--muted)">© Luke Ridgeway — Built with HTML/CSS/JS</p>
+    </div>
+  </footer>
+</body>
+</html>

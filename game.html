@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Clash Royale Style Game</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .game-container {
+      display: flex;
+      flex-direction: column;
+      height: 80vh;
+      background: linear-gradient(135deg, #2c5530, #1a3d1f);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background: rgba(0,0,0,0.3);
+      color: white;
+    }
+    
+    .elixir-bar {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    
+    .elixir {
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+    
+    .timer {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ffeb3b;
+    }
+    
+    .game-field {
+      flex: 1;
+      position: relative;
+      background: linear-gradient(180deg, #4a6741, #3d5530);
+      overflow: hidden;
+    }
+    
+    .tower {
+      position: absolute;
+      width: 60px;
+      height: 80px;
+      background: linear-gradient(135deg, #8b4513, #a0522d);
+      border: 3px solid #654321;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .tower.king {
+      width: 80px;
+      height: 100px;
+      background: linear-gradient(135deg, #ffd700, #ffed4e);
+      border: 4px solid #ff8c00;
+    }
+    
+    .tower.arena {
+      width: 50px;
+      height: 70px;
+      background: linear-gradient(135deg, #696969, #808080);
+    }
+    
+    .health-bar {
+      position: absolute;
+      top: -8px;
+      left: -5px;
+      width: calc(100% + 10px);
+      height: 6px;
+      background: #333;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    
+    .health-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00);
+      transition: width 0.3s ease;
+    }
+    
+    .unit {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      transition: all 0.1s ease;
+    }
+    
+    .unit.knight {
+      background: linear-gradient(135deg, #4169e1, #6495ed);
+    }
+    
+    .unit.archer {
+      background: linear-gradient(135deg, #32cd32, #90ee90);
+    }
+    
+    .unit.giant {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #8b4513, #a0522d);
+    }
+    
+    .unit.wizard {
+      background: linear-gradient(135deg, #9370db, #ba55d3);
+    }
+    
+    .unit.health-bar {
+      position: absolute;
+      top: -6px;
+      left: -2px;
+      width: calc(100% + 4px);
+      height: 4px;
+      background: #333;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    
+    .unit.health-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00);
+      transition: width 0.2s ease;
+    }
+    
+    .card-deck {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+    }
+    
+    .card {
+      width: 80px;
+      height: 100px;
+      background: linear-gradient(135deg, #4a90e2, #357abd);
+      border: 3px solid #2c5aa0;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    
+    .card.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .card-cost {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: #ff6b6b;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+    }
+    
+    .game-over {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.9);
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      z-index: 1000;
+    }
+    
+    .projectile {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #ffeb3b;
+      border-radius: 50%;
+      z-index: 10;
+    }
+  </style>
+  </head>
+<body>
+  <nav class="container">
+    <div class="nav-inner"><div class="logo">MySite</div>
+      <button class="nav-toggle" aria-label="Toggle nav">☰</button>
+      <div class="nav-links"><a href="index.html">Home</a><a href="hobbies.html">Hobbies</a><a href="discover.html">Discover</a><a href="resume.html">Resume</a><a href="career.html">Career</a><a href="game.html">Game</a></div>
+      <button class="dark-mode-toggle" aria-label="Toggle theme">🌓</button>
+    </div>
+  </nav>
+  
+  <main class="container">
+    <h1>Clash Royale Style Battle</h1>
+    <p class="lead">Deploy units strategically to destroy your opponent's towers! 3-minute matches with AI opponent.</p>
+
+    <div class="game-container">
+      <div class="game-header">
+        <div class="elixir-bar">
+          <span>Elixir:</span>
+          <div id="elixirDisplay"></div>
+        </div>
+        <div class="timer" id="timer">3:00</div>
+        <div>Score: <span id="score">0</span></div>
+      </div>
+      
+      <div class="game-field" id="gameField">
+        <!-- Player Towers -->
+        <div class="tower king" id="playerKing" style="bottom: 20px; left: 50px;">
+          <div class="health-bar">
+            <div class="health-fill" id="playerKingHealth"></div>
+          </div>
+          <div style="color: #ffd700; font-size: 10px;">KING</div>
+        </div>
+        
+        <div class="tower arena" id="playerArena1" style="bottom: 20px; left: 200px;">
+          <div class="health-bar">
+            <div class="health-fill" id="playerArena1Health"></div>
+          </div>
+        </div>
+        
+        <div class="tower arena" id="playerArena2" style="bottom: 20px; right: 200px;">
+          <div class="health-bar">
+            <div class="health-fill" id="playerArena2Health"></div>
+          </div>
+        </div>
+        
+        <!-- AI Towers -->
+        <div class="tower king" id="aiKing" style="top: 20px; right: 50px;">
+          <div class="health-bar">
+            <div class="health-fill" id="aiKingHealth"></div>
+          </div>
+          <div style="color: #ffd700; font-size: 10px;">KING</div>
+        </div>
+        
+        <div class="tower arena" id="aiArena1" style="top: 20px; right: 200px;">
+          <div class="health-bar">
+            <div class="health-fill" id="aiArena1Health"></div>
+          </div>
+        </div>
+        
+        <div class="tower arena" id="aiArena2" style="top: 20px; left: 200px;">
+          <div class="health-bar">
+            <div class="health-fill" id="aiArena2Health"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-deck">
+        <div class="card" data-unit="knight" data-cost="3">
+          <div class="card-cost">3</div>
+          <div>⚔️</div>
+          <div style="font-size: 10px;">Knight</div>
+        </div>
+        <div class="card" data-unit="archer" data-cost="3">
+          <div class="card-cost">3</div>
+          <div>🏹</div>
+          <div style="font-size: 10px;">Archer</div>
+        </div>
+        <div class="card" data-unit="giant" data-cost="5">
+          <div class="card-cost">5</div>
+          <div>🛡️</div>
+          <div style="font-size: 10px;">Giant</div>
+        </div>
+        <div class="card" data-unit="wizard" data-cost="5">
+          <div class="card-cost">5</div>
+          <div>🔮</div>
+          <div style="font-size: 10px;">Wizard</div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="margin-top: 1rem; text-align: center;">
+      <button onclick="startGame()" class="download-btn">Start New Game</button>
+      <button onclick="pauseGame()" class="download-btn" style="margin-left: 1rem;">Pause</button>
+    </div>
+  </main>
+  
+  <footer class="container">Contact: <a href="mailto:ridge067@d.umn.edu">ridge067@d.umn.edu</a></footer>
+
+  <script>
+    class ClashRoyaleGame {
+      constructor() {
+        this.gameField = document.getElementById('gameField');
+        this.elixirDisplay = document.getElementById('elixirDisplay');
+        this.timer = document.getElementById('timer');
+        this.score = document.getElementById('score');
+        
+        this.elixir = 3;
+        this.maxElixir = 10;
+        this.timeLeft = 180; // 3 minutes
+        this.gameRunning = false;
+        this.gamePaused = false;
+        this.units = [];
+        this.projectiles = [];
+        this.unitId = 0;
+        
+        this.towerHealth = {
+          playerKing: 2000,
+          playerArena1: 1000,
+          playerArena2: 1000,
+          aiKing: 2000,
+          aiArena1: 1000,
+          aiArena2: 1000
+        };
+        
+        this.unitTypes = {
+          knight: { health: 100, damage: 50, speed: 2, range: 30, cost: 3, size: 30 },
+          archer: { health: 60, damage: 30, speed: 1.5, range: 80, cost: 3, size: 30 },
+          giant: { health: 200, damage: 80, speed: 1, range: 25, cost: 5, size: 40 },
+          wizard: { health: 80, damage: 60, speed: 1.5, range: 70, cost: 5, size: 30 }
+        };
+        
+        this.init();
+      }
+      
+      init() {
+        this.updateElixirDisplay();
+        this.updateHealthBars();
+        this.setupEventListeners();
+        this.startElixirGeneration();
+      }
+      
+      setupEventListeners() {
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+          card.addEventListener('click', () => {
+            if (!this.gameRunning || this.gamePaused) return;
+            const unitType = card.dataset.unit;
+            const cost = parseInt(card.dataset.cost);
+            if (this.elixir >= cost) {
+              this.deployUnit(unitType, 'player');
+              this.elixir -= cost;
+              this.updateElixirDisplay();
+            }
+          });
+        });
+      }
+      
+      startGame() {
+        this.gameRunning = true;
+        this.gamePaused = false;
+        this.timeLeft = 180;
+        this.elixir = 3;
+        this.units = [];
+        this.projectiles = [];
+        this.unitId = 0;
+        
+        // Reset tower health
+        Object.keys(this.towerHealth).forEach(tower => {
+          this.towerHealth[tower] = tower.includes('King') ? 2000 : 1000;
+        });
+        
+        this.updateElixirDisplay();
+        this.updateHealthBars();
+        this.startTimer();
+        this.startAI();
+        this.startGameLoop();
+      }
+      
+      pauseGame() {
+        this.gamePaused = !this.gamePaused;
+      }
+      
+      startElixirGeneration() {
+        setInterval(() => {
+          if (this.gameRunning && !this.gamePaused && this.elixir < this.maxElixir) {
+            this.elixir++;
+            this.updateElixirDisplay();
+          }
+        }, 2000);
+      }
+      
+      startTimer() {
+        const timerInterval = setInterval(() => {
+          if (!this.gameRunning || this.gamePaused) return;
+          
+          this.timeLeft--;
+          const minutes = Math.floor(this.timeLeft / 60);
+          const seconds = this.timeLeft % 60;
+          this.timer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+          
+          if (this.timeLeft <= 0) {
+            clearInterval(timerInterval);
+            this.endGame();
+          }
+        }, 1000);
+      }
+      
+      startAI() {
+        setInterval(() => {
+          if (!this.gameRunning || this.gamePaused) return;
+          
+          // AI deploys units randomly
+          if (Math.random() < 0.3 && this.elixir >= 3) {
+            const unitTypes = Object.keys(this.unitTypes);
+            const randomUnit = unitTypes[Math.floor(Math.random() * unitTypes.length)];
+            const cost = this.unitTypes[randomUnit].cost;
+            
+            if (this.elixir >= cost) {
+              this.deployUnit(randomUnit, 'ai');
+              this.elixir -= cost;
+              this.updateElixirDisplay();
+            }
+          }
+        }, 3000);
+      }
+      
+      deployUnit(unitType, side) {
+        const unitData = this.unitTypes[unitType];
+        const unit = {
+          id: this.unitId++,
+          type: unitType,
+          side: side,
+          x: side === 'player' ? 100 : 700,
+          y: side === 'player' ? 150 : 250,
+          health: unitData.health,
+          maxHealth: unitData.health,
+          damage: unitData.damage,
+          speed: unitData.speed,
+          range: unitData.range,
+          size: unitData.size,
+          target: null,
+          lastAttack: 0
+        };
+        
+        this.units.push(unit);
+        this.renderUnit(unit);
+      }
+      
+      renderUnit(unit) {
+        const unitElement = document.createElement('div');
+        unitElement.className = `unit ${unit.type}`;
+        unitElement.id = `unit-${unit.id}`;
+        unitElement.style.left = unit.x + 'px';
+        unitElement.style.top = unit.y + 'px';
+        unitElement.style.width = unit.size + 'px';
+        unitElement.style.height = unit.size + 'px';
+        
+        // Health bar
+        const healthBar = document.createElement('div');
+        healthBar.className = 'unit health-bar';
+        const healthFill = document.createElement('div');
+        healthFill.className = 'unit health-fill';
+        healthFill.style.width = '100%';
+        healthBar.appendChild(healthFill);
+        unitElement.appendChild(healthBar);
+        
+        this.gameField.appendChild(unitElement);
+      }
+      
+      startGameLoop() {
+        const gameLoop = () => {
+          if (!this.gameRunning || this.gamePaused) {
+            requestAnimationFrame(gameLoop);
+            return;
+          }
+          
+          this.updateUnits();
+          this.updateProjectiles();
+          this.checkGameEnd();
+          
+          requestAnimationFrame(gameLoop);
+        };
+        requestAnimationFrame(gameLoop);
+      }
+      
+      updateUnits() {
+        this.units.forEach(unit => {
+          if (unit.health <= 0) {
+            this.removeUnit(unit);
+            return;
+          }
+          
+          // Find target
+          if (!unit.target || unit.target.health <= 0) {
+            unit.target = this.findTarget(unit);
+          }
+          
+          if (unit.target) {
+            const distance = this.getDistance(unit, unit.target);
+            
+            if (distance <= unit.range) {
+              // Attack
+              if (Date.now() - unit.lastAttack > 1000) {
+                this.attack(unit, unit.target);
+                unit.lastAttack = Date.now();
+              }
+            } else {
+              // Move towards target
+              this.moveUnit(unit, unit.target);
+            }
+          } else {
+            // Move towards nearest tower
+            const nearestTower = this.findNearestTower(unit);
+            if (nearestTower) {
+              this.moveUnit(unit, nearestTower);
+            }
+          }
+          
+          this.updateUnitPosition(unit);
+        });
+      }
+      
+      findTarget(unit) {
+        const enemies = this.units.filter(u => u.side !== unit.side && u.health > 0);
+        if (enemies.length === 0) return null;
+        
+        // Find closest enemy
+        let closest = null;
+        let closestDistance = Infinity;
+        
+        enemies.forEach(enemy => {
+          const distance = this.getDistance(unit, enemy);
+          if (distance < closestDistance) {
+            closest = enemy;
+            closestDistance = distance;
+          }
+        });
+        
+        return closest;
+      }
+      
+      findNearestTower(unit) {
+        const towers = unit.side === 'player' ? 
+          ['aiKing', 'aiArena1', 'aiArena2'] : 
+          ['playerKing', 'playerArena1', 'playerArena2'];
+        
+        let nearest = null;
+        let nearestDistance = Infinity;
+        
+        towers.forEach(towerId => {
+          const tower = this.getTowerPosition(towerId);
+          const distance = Math.sqrt(
+            Math.pow(unit.x - tower.x, 2) + Math.pow(unit.y - tower.y, 2)
+          );
+          if (distance < nearestDistance) {
+            nearest = { id: towerId, x: tower.x, y: tower.y };
+            nearestDistance = distance;
+          }
+        });
+        
+        return nearest;
+      }
+      
+      getTowerPosition(towerId) {
+        const tower = document.getElementById(towerId);
+        const rect = tower.getBoundingClientRect();
+        const fieldRect = this.gameField.getBoundingClientRect();
+        return {
+          x: rect.left - fieldRect.left + rect.width / 2,
+          y: rect.top - fieldRect.top + rect.height / 2
+        };
+      }
+      
+      moveUnit(unit, target) {
+        const dx = target.x - unit.x;
+        const dy = target.y - unit.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance > 0) {
+          const moveX = (dx / distance) * unit.speed;
+          const moveY = (dy / distance) * unit.speed;
+          
+          unit.x += moveX;
+          unit.y += moveY;
+        }
+      }
+      
+      attack(unit, target) {
+        if (target.health <= 0) return;
+        
+        // Create projectile for ranged units
+        if (unit.type === 'archer' || unit.type === 'wizard') {
+          this.createProjectile(unit, target);
+        } else {
+          // Melee attack
+          target.health -= unit.damage;
+          if (target.health <= 0) {
+            target.health = 0;
+            this.removeUnit(target);
+          }
+        }
+      }
+      
+      createProjectile(unit, target) {
+        const projectile = {
+          id: Date.now(),
+          x: unit.x + unit.size / 2,
+          y: unit.y + unit.size / 2,
+          targetX: target.x + target.size / 2,
+          targetY: target.y + target.size / 2,
+          damage: unit.damage,
+          target: target
+        };
+        
+        this.projectiles.push(projectile);
+        this.renderProjectile(projectile);
+      }
+      
+      renderProjectile(projectile) {
+        const projectileElement = document.createElement('div');
+        projectileElement.className = 'projectile';
+        projectileElement.id = `projectile-${projectile.id}`;
+        projectileElement.style.left = projectile.x + 'px';
+        projectileElement.style.top = projectile.y + 'px';
+        this.gameField.appendChild(projectileElement);
+      }
+      
+      updateProjectiles() {
+        this.projectiles.forEach(projectile => {
+          const dx = projectile.targetX - projectile.x;
+          const dy = projectile.targetY - projectile.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 10) {
+            // Hit target
+            projectile.target.health -= projectile.damage;
+            if (projectile.target.health <= 0) {
+              projectile.target.health = 0;
+              this.removeUnit(projectile.target);
+            }
+            this.removeProjectile(projectile);
+          } else {
+            // Move projectile
+            const speed = 5;
+            projectile.x += (dx / distance) * speed;
+            projectile.y += (dy / distance) * speed;
+            
+            const element = document.getElementById(`projectile-${projectile.id}`);
+            if (element) {
+              element.style.left = projectile.x + 'px';
+              element.style.top = projectile.y + 'px';
+            }
+          }
+        });
+      }
+      
+      removeUnit(unit) {
+        const index = this.units.indexOf(unit);
+        if (index > -1) {
+          this.units.splice(index, 1);
+        }
+        
+        const element = document.getElementById(`unit-${unit.id}`);
+        if (element) {
+          element.remove();
+        }
+      }
+      
+      removeProjectile(projectile) {
+        const index = this.projectiles.indexOf(projectile);
+        if (index > -1) {
+          this.projectiles.splice(index, 1);
+        }
+        
+        const element = document.getElementById(`projectile-${projectile.id}`);
+        if (element) {
+          element.remove();
+        }
+      }
+      
+      updateUnitPosition(unit) {
+        const element = document.getElementById(`unit-${unit.id}`);
+        if (element) {
+          element.style.left = unit.x + 'px';
+          element.style.top = unit.y + 'px';
+          
+          // Update health bar
+          const healthFill = element.querySelector('.unit.health-fill');
+          if (healthFill) {
+            const healthPercent = (unit.health / unit.maxHealth) * 100;
+            healthFill.style.width = healthPercent + '%';
+          }
+        }
+      }
+      
+      getDistance(unit1, unit2) {
+        return Math.sqrt(
+          Math.pow(unit1.x - unit2.x, 2) + Math.pow(unit1.y - unit2.y, 2)
+        );
+      }
+      
+      updateElixirDisplay() {
+        this.elixirDisplay.innerHTML = '';
+        for (let i = 0; i < this.maxElixir; i++) {
+          const elixirDot = document.createElement('div');
+          elixirDot.className = 'elixir';
+          if (i < this.elixir) {
+            elixirDot.style.opacity = '1';
+          } else {
+            elixirDot.style.opacity = '0.3';
+          }
+          this.elixirDisplay.appendChild(elixirDot);
+        }
+      }
+      
+      updateHealthBars() {
+        Object.keys(this.towerHealth).forEach(towerId => {
+          const healthBar = document.getElementById(towerId + 'Health');
+          if (healthBar) {
+            const maxHealth = towerId.includes('King') ? 2000 : 1000;
+            const healthPercent = (this.towerHealth[towerId] / maxHealth) * 100;
+            healthBar.style.width = healthPercent + '%';
+          }
+        });
+      }
+      
+      checkGameEnd() {
+        const playerTowersAlive = this.towerHealth.playerKing > 0 || 
+                                 this.towerHealth.playerArena1 > 0 || 
+                                 this.towerHealth.playerArena2 > 0;
+        const aiTowersAlive = this.towerHealth.aiKing > 0 || 
+                             this.towerHealth.aiArena1 > 0 || 
+                             this.towerHealth.aiArena2 > 0;
+        
+        if (!playerTowersAlive || !aiTowersAlive || this.timeLeft <= 0) {
+          this.endGame();
+        }
+      }
+      
+      endGame() {
+        this.gameRunning = false;
+        
+        let winner = 'Draw';
+        if (this.towerHealth.playerKing <= 0 && this.towerHealth.playerArena1 <= 0 && this.towerHealth.playerArena2 <= 0) {
+          winner = 'AI Wins!';
+        } else if (this.towerHealth.aiKing <= 0 && this.towerHealth.aiArena1 <= 0 && this.towerHealth.aiArena2 <= 0) {
+          winner = 'You Win!';
+        } else if (this.timeLeft <= 0) {
+          winner = 'Time\'s Up!';
+        }
+        
+        alert(`Game Over! ${winner}`);
+      }
+    }
+    
+    let game;
+    
+    function startGame() {
+      if (game) {
+        game.startGame();
+      } else {
+        game = new ClashRoyaleGame();
+        game.startGame();
+      }
+    }
+    
+    function pauseGame() {
+      if (game) {
+        game.pauseGame();
+      }
+    }
+    
+    // Initialize game when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      game = new ClashRoyaleGame();
+    });
+  </script>
+</body>
+</html>
