@@ -6,6 +6,10 @@
   <title>Pac-Man Game</title>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
+  <audio id="pacmanMusic" loop>
+    <source src="https://www.sounds-resource.com/download/5309/" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
   <style>
     .pacman-container {
       display: flex;
@@ -112,7 +116,7 @@
       </div>
 
       <div class="game-controls">
-        <button onclick="pacmanGame.startGame()" class="download-btn">Start Game</button>
+        <button onclick="startGameWithSound()" class="download-btn">Start Game</button>
         <button onclick="pacmanGame.togglePause()" class="download-btn">Pause</button>
         <button onclick="pacmanGame.resetGame()" class="download-btn">Reset</button>
       </div>
@@ -648,6 +652,26 @@
       }
     }
     
+    // Start game with sound
+    function startGameWithSound() {
+      const pacmanMusic = document.getElementById('pacmanMusic');
+      if (pacmanGame && !pacmanGame.gameRunning) {
+        pacmanGame.startGame();
+        // Try to play the music (may be blocked by browser autoplay policies)
+        const playPromise = pacmanMusic.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.log('Audio play was prevented:', error);
+            // Autoplay was prevented, we'll try again on a user gesture
+            document.addEventListener('click', function enableAudio() {
+              pacmanMusic.play().catch(e => console.log('Audio play failed:', e));
+              document.removeEventListener('click', enableAudio);
+            }, { once: true });
+          });
+        }
+      }
+    }
+
     // Initialize game
     let pacmanGame;
     document.addEventListener('DOMContentLoaded', () => {
