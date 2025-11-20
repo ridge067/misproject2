@@ -1,73 +1,127 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Resume</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Luke Ridgeway's professional resume highlighting education, experience, and skills in business and finance.">
+  <title>Resume — Luke Ridgeway</title>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
-  </head>
+</head>
 <body>
-  <nav class="container">
-    <div class="nav-inner"><div class="logo">MySite</div>
-      <button class="nav-toggle" aria-label="Toggle nav">☰</button>
-      <div class="nav-links"><a href="index.html">Home</a><a href="hobbies.html">Hobbies</a><a href="discover.html">Discover</a><a href="resume.html">Resume</a><a href="career.html">Career</a><a href="game.html">Game</a></div>
-      <button class="dark-mode-toggle" aria-label="Toggle theme">🌓</button>
-    </div>
-  </nav>
-  <main class="container">
-    <h1 style="text-align:center;color:var(--text)">My Resume</h1>
-    <div class="resume-section" style="display:flex;gap:2rem;align-items:flex-start">
-      <div class="resume-left card" style="flex:0 0 45%;padding:2rem">
-        <h2>LUKE RIDGEWAY</h2>
-        <p class="muted">Saint Paul, MN 55113-1425 | 16514483657 | lukejridgeway@gmail.com</p>
-        
-        <h3>EDUCATION</h3>
-        <p><strong>Mounds View, Mounds View, MN</strong><br>
-        High School Diploma, 06/2025</p>
-        <ul>
-          <li>3.8 GPA</li>
-          <li>Extracurricular Activities: Varsity Track and Field</li>
-          <li>Completed AP course in Macro Economics</li>
-        </ul>
-
-        <h3>PROFESSIONAL SUMMARY</h3>
-        <p>Dynamic Sales Associate with a proven track record at Ace Hardware, excelling in customer service and teamwork. Skilled in time management and problem-solving, adept at adapting to fast-paced sales priorities.</p>
-
-        <h3>SKILLS</h3>
-        <ul>
-          <li>Customer service</li>
-          <li>Time management</li>
-          <li>Listening skills</li>
-          <li>Teamwork and collaboration</li>
-          <li>Problem-solving skills</li>
-        </ul>
-
-        <h3>EXPERIENCE</h3>
-        <p><strong>Sales Associate | Ace Hardware, Arden Hills, MN | 06/2022 – 08/2023</strong></p>
-        <ul>
-          <li>Assisted customers with product inquiries and selections to enhance shopping experience.</li>
-          <li>Maintained store organization and cleanliness to ensure a welcoming environment.</li>
-          <li>Collaborated with team members to restock merchandise efficiently and accurately.</li>
-          <li>Greeted customers promptly, fostering positive interactions and promoting brand loyalty.</li>
-          <li>Learned product features and promotions to provide informed recommendations to shoppers.</li>
-          <li>Organized racks and shelves to maintain store visual appeal, engage customers, and promote specific merchandise.</li>
-          <li>Adapted quickly to changing sales priorities and customer needs in a fast-paced environment.</li>
-          <li>Provided positive first impressions to welcome existing, new, and potential customers.</li>
-        </ul>
+  <header role="banner">
+    <nav class="container" aria-label="Main navigation">
+      <div class="nav-inner">
+        <a href="index.html" class="logo" aria-label="Luke Ridgeway Home">Luke Ridgeway</a>
+        <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="hobbies.html">Hobbies</a>
+          <a href="discover.html">Discover</a>
+          <a href="resume.html" aria-current="page">Resume</a>
+          <a href="career.html">Career</a>
+          <a href="game.html">Game</a>
+        </div>
+        <button class="dark-mode-toggle" aria-label="Toggle theme">Theme: Dark</button>
       </div>
+    </nav>
+  </header>
 
-      <aside class="card" style="flex:1;padding:1.5rem">
-        <h3>Resume Preview</h3>
-        <img src="IMAGES/Screenshot 2025-09-23 001709.png" alt="Resume screenshot" style="width:100%;border-radius:8px;margin-bottom:1rem;max-width:none;min-width:600px">
-        <p style="font-size:0.95rem;color:var(--muted)">Screenshot of my resume document.</p>
-        <hr style="margin:1rem 0">
-        <h3>Download</h3>
-        <p>Click to download a PDF version of this resume.</p>
-        <a class="download-btn" href="FILES/resume.pdf" download style="display:inline-block;background:var(--accent);color:white;padding:0.75rem 1.5rem;border-radius:6px;text-decoration:none;margin-top:0.5rem">Download PDF</a>
+  <main class="container" role="main">
+    <header>
+      <h1>My Professional Resume</h1>
+      <p class="lead">A summary of my education, experience, and qualifications.</p>
+    </header>
+
+    <article class="resume-layout">
+      <section class="resume-content">
+        <header>
+          <h2>Luke Ridgeway</h2>
+          <address>
+            Saint Paul, MN 55113-1425 | <a href="tel:16514483657">651-448-3657</a> | <a href="mailto:lukejridgeway@gmail.com">lukejridgeway@gmail.com</a>
+          </address>
+        </header>
+
+        <section class="resume-section">
+          <h3>Professional Summary</h3>
+          <p>Results-driven Sales Associate with a proven track record at Ace Hardware, excelling in customer service and teamwork. Skilled in time management and problem-solving, adept at adapting to fast-paced sales priorities and building strong customer relationships.</p>
+        </section>
+
+        <section class="resume-section">
+          <h3>Education</h3>
+          <article class="resume-entry">
+            <h4>High School Diploma</h4>
+            <p><strong>Mounds View High School, Mounds View, MN</strong> | Graduation: June 2025</p>
+            <ul>
+              <li>3.8 GPA</li>
+              <li>Extracurricular Activities: Varsity Track and Field</li>
+              <li>Advanced Coursework: AP Macro Economics</li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="resume-section">
+          <h3>Professional Experience</h3>
+          <article class="resume-entry">
+            <h4>Sales Associate</h4>
+            <p><strong>Ace Hardware, Arden Hills, MN</strong> | June 2022 – August 2023</p>
+            <ul>
+              <li>Assisted customers with product inquiries and selections to enhance shopping experience and drive sales</li>
+              <li>Maintained store organization and cleanliness to ensure a welcoming environment for all customers</li>
+              <li>Collaborated with team members to restock merchandise efficiently and accurately</li>
+              <li>Greeted customers promptly, fostering positive interactions and promoting brand loyalty</li>
+              <li>Learned comprehensive product features and promotions to provide informed recommendations</li>
+              <li>Organized displays and shelving to maintain visual appeal and highlight key merchandise</li>
+              <li>Adapted quickly to changing sales priorities and customer needs in a fast-paced environment</li>
+              <li>Provided positive first impressions to welcome existing, new, and potential customers</li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="resume-section">
+          <h3>Core Competencies</h3>
+          <ul class="skills-list">
+            <li>Customer Service Excellence</li>
+            <li>Time Management</li>
+            <li>Active Listening</li>
+            <li>Teamwork & Collaboration</li>
+            <li>Problem-Solving</li>
+            <li>Communication Skills</li>
+            <li>Sales & Customer Relations</li>
+            <li>Organization & Attention to Detail</li>
+          </ul>
+        </section>
+      </section>
+
+      <aside class="resume-sidebar">
+        <article class="resume-preview">
+          <h3>Resume Preview</h3>
+          <img src="IMAGES/Screenshot 2025-09-23 001709.png" alt="Full-page resume screenshot" class="resume-preview-img" loading="lazy">
+          <p>Click the image to expand and view the full resume.</p>
+        </article>
+        
+        <!-- Modal for expanded resume image -->
+        <div id="resumeModal" class="resume-modal">
+          <span class="resume-modal-close">&times;</span>
+          <img class="resume-modal-content" id="resumeModalImg" alt="Expanded resume">
+        </div>
+
+        <article class="resume-download">
+          <h3>Download Resume</h3>
+          <p>Click the button below to download my full resume as a PDF document.</p>
+          <a href="FILES/resume.pdf" download class="download-btn" aria-label="Download resume in PDF format">Download PDF</a>
+        </article>
       </aside>
-    </div>
+    </article>
   </main>
-  <footer class="container">Contact: <a href="mailto:ridge067@d.umn.edu">ridge067@d.umn.edu</a></footer>
+
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2025 Luke Ridgeway. All rights reserved.</p>
+        <p>Built with HTML5, CSS3, and JavaScript</p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

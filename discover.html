@@ -1,76 +1,97 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Discover UMD & Duluth</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn about Luke Ridgeway's experience at University of Minnesota Duluth and why Duluth is the perfect place to study.">
+  <title>Discover UMD & Duluth — Luke Ridgeway</title>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
-  </head>
+</head>
 <body>
-  <nav class="container">
-    <div class="nav-inner"><div class="logo">MySite</div>
-      <button class="nav-toggle" aria-label="Toggle nav">☰</button>
-      <div class="nav-links"><a href="index.html">Home</a><a href="hobbies.html">Hobbies</a><a href="discover.html">Discover</a><a href="resume.html">Resume</a><a href="career.html">Career</a><a href="game.html">Game</a></div>
-      <button class="dark-mode-toggle" aria-label="Toggle theme">🌓</button>
-    </div>
-  </nav>
-  <main class="container">
-    <h1>Discover UMD & Duluth</h1>
-    <p class="lead">Why I chose University of Minnesota Duluth and what I enjoy about Duluth.</p>
-
-    <section style="display:flex;gap:2rem;align-items:flex-start;margin-top:1.5rem">
-      <div style="flex:0 0 400px">
-        <div class="card" style="padding:1.5rem">
-          <h3>UMD Video (30s)</h3>
-          <video controls width="100%" style="aspect-ratio:1/1;object-fit:cover;border-radius:8px">
-            <source src="VIDEOS/umd-video.mp4" type="video/mp4">
-            <source src="assets/umd_promo.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
+  <header role="banner">
+    <nav class="container" aria-label="Main navigation">
+      <div class="nav-inner">
+        <a href="index.html" class="logo" aria-label="Luke Ridgeway Home">Luke Ridgeway</a>
+        <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="hobbies.html">Hobbies</a>
+          <a href="discover.html" aria-current="page">Discover</a>
+          <a href="resume.html">Resume</a>
+          <a href="career.html">Career</a>
+          <a href="game.html">Game</a>
         </div>
+        <button class="dark-mode-toggle" aria-label="Toggle theme">Theme: Dark</button>
       </div>
+    </nav>
+  </header>
 
-      <div style="flex:1">
-        <div class="card" style="padding:2rem;margin-bottom:1.5rem">
-          <h3>Why UMD</h3>
-          <p>I chose the University of Minnesota Duluth for several compelling reasons that align with my academic and personal goals.</p>
+  <main class="container" role="main">
+    <header>
+      <h1>Discover UMD & Duluth</h1>
+      <p class="lead">Exploring why University of Minnesota Duluth and the Duluth area are perfect for my educational and personal journey.</p>
+    </header>
+
+    <article class="discover-content">
+      <section class="discover-main">
+        <article class="discover-section">
+          <h2>Why University of Minnesota Duluth</h2>
+          <p>I chose the University of Minnesota Duluth for several compelling reasons that align with my academic and personal goals:</p>
           <ul>
             <li><strong>Strong Business Program:</strong> UMD's Labovitz School of Business and Economics offers excellent programs that will prepare me for a successful career in business and management.</li>
-            <li><strong>Small Class Sizes:</strong> The smaller student-to-faculty ratio means more personalized attention and better learning opportunities.</li>
             <li><strong>Beautiful Campus:</strong> The campus is located in a stunning natural setting with Lake Superior nearby, providing an inspiring environment for learning.</li>
-            <li><strong>Research Opportunities:</strong> UMD offers numerous undergraduate research opportunities that will enhance my academic experience.</li>
-            <li><strong>Affordable Education:</strong> As a Minnesota resident, UMD provides excellent value for a quality education.</li>
+            <li><strong>Good food:</strong> There is an unlimited food plan which is great for people like me who are always hungry.</li>
           </ul>
-        </div>
+        </article>
 
-        <div class="card" style="padding:2rem;margin-bottom:1.5rem">
-          <h3>Duluth & Surroundings</h3>
-          <p>Duluth offers an incredible quality of life that perfectly complements my academic pursuits and personal interests.</p>
+        <article class="media-card video-featured">
+          <h2>University of Minnesota Duluth - Marketing Video</h2>
+          <p class="video-label"><em>YouTube Video</em></p>
+          <iframe width="100%" height="500" src="https://www.youtube.com/embed/MNlOESSCBys" title="University of Minnesota Duluth - Marketing Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </article>
+
+        <article class="discover-section">
+          <h2>Duluth & Surroundings</h2>
+          <p>Duluth offers an incredible quality of life that perfectly complements my academic pursuits and personal interests:</p>
           <ul>
             <li><strong>Outdoor Recreation:</strong> With Lake Superior, numerous hiking trails, and winter sports opportunities, Duluth is perfect for someone who loves outdoor activities like fishing and snowboarding.</li>
-            <li><strong>Vibrant Community:</strong> The city has a thriving arts scene, great restaurants, and a welcoming community atmosphere.</li>
-            <li><strong>Career Opportunities:</strong> Duluth's growing business community provides excellent internship and job opportunities for students.</li>
             <li><strong>Four Seasons:</strong> I love experiencing all four seasons, from beautiful summers on the lake to snowy winters perfect for snowboarding.</li>
             <li><strong>Proximity to Nature:</strong> The Boundary Waters Canoe Area and North Shore are easily accessible for weekend adventures.</li>
+            <li><strong>Spirit Mountain:</strong> Spirit Mountain which is one of the best places to ski and snowboard in Minnesota is right outside of town making it an easily accessible activity to do with your friends in the winter.</li>
           </ul>
-        </div>
+          <figure style="margin-top: 1.5rem;">
+            <img src="IMAGES/20251008_171223.jpg" alt="Beautiful natural landscape with river and forest in Duluth area" class="discover-image" loading="lazy" style="width: 100%; border-radius: 8px; display: block;">
+          </figure>
+        </article>
 
-        <div class="card" style="padding:2rem">
-          <h3>My Goals at UMD</h3>
-          <p>During my time at UMD, I plan to:</p>
+        <article class="discover-section">
+          <h2>My Goals at UMD</h2>
+          <p>During my time at UMD, I plan to focus on:</p>
           <ul>
             <li>Excel academically in my business studies while maintaining a strong GPA</li>
-            <li>Get involved in student organizations and leadership opportunities</li>
             <li>Participate in internships to gain real-world business experience</li>
             <li>Take advantage of the outdoor recreation opportunities in the Duluth area</li>
             <li>Build lasting relationships with professors and fellow students</li>
-            <li>Explore career paths in business and management</li>
+            <li>Explore career paths in finance and strategic management</li>
           </ul>
-        </div>
-      </div>
-    </section>
+        </article>
+
+        <article class="discover-section career-cta">
+          <h2>My experience at UMD</h2>
+          <p>Ive had lots of fun with my friends here at UMD both on and off campus. Because everything is connected through skyway and tunnels I can go to the dining center then hitup the gym and play basketball with friends or weightlift which is a huge plus. Another experience ive had is taking the public transportation system which picks us up and drops us back off at kirby plaza to canal park which has beautiful views of the lake and city.</p>
+        </article>
+      </section>
+    </article>
   </main>
-  <footer class="container">Contact: <a href="mailto:ridge067@d.umn.edu">ridge067@d.umn.edu</a></footer>
+
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2025 Luke Ridgeway. All rights reserved.</p>
+        <p>Built with HTML5, CSS3, and JavaScript</p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

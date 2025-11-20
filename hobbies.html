@@ -1,68 +1,95 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Hobbies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore Luke Ridgeway's hobbies and interests including cars, fishing, and weightlifting.">
+  <title>Hobbies & Interests — Luke Ridgeway</title>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
-  </head>
+</head>
 <body>
-  <nav class="container">
-    <div class="nav-inner"><div class="logo">MySite</div>
-      <button class="nav-toggle" aria-label="Toggle nav">☰</button>
-      <div class="nav-links"><a href="index.html">Home</a><a href="hobbies.html">Hobbies</a><a href="discover.html">Discover</a><a href="resume.html">Resume</a><a href="career.html">Career</a><a href="game.html">Game</a></div>
-      <button class="dark-mode-toggle" aria-label="Toggle theme">🌓</button>
-    </div>
-  </nav>
-  <main class="container">
-    <div style="text-align:center;margin-bottom:2rem">
+  <header role="banner">
+    <nav class="container" aria-label="Main navigation">
+      <div class="nav-inner">
+        <a href="index.html" class="logo" aria-label="Luke Ridgeway Home">Luke Ridgeway</a>
+        <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="hobbies.html" aria-current="page">Hobbies</a>
+          <a href="discover.html">Discover</a>
+          <a href="resume.html">Resume</a>
+          <a href="career.html">Career</a>
+          <a href="game.html">Game</a>
+        </div>
+        <button class="dark-mode-toggle" aria-label="Toggle theme">Theme: Dark</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container" role="main">
+    <header>
       <h1>Hobbies & Interests</h1>
-      <p class="lead">Here are some of my hobbies</p>
-    </div>
+      <p class="lead">Explore my favorite hobbies and the activities that fuel my passion for learning and personal growth.</p>
+    </header>
 
-    <section style="display:flex;gap:2rem;align-items:flex-start">
-      <div style="flex:1">
-        <div class="grid">
-          <div class="card">
-            <img src="IMAGES/20250616_185103.jpg" alt="cars hobby" style="width:100%;height:250px;object-fit:contain;border-radius:8px;margin-bottom:0.5rem">
-            <p>This is my 2006 acura TL. I love this car and have done some modifcations to it such as new wheels.</p>
-          </div>
-          <div class="card">
-            <img src="IMAGES/image000001(3).jpg" alt="fishing hobby" style="width:100%;height:250px;object-fit:contain;border-radius:8px;margin-bottom:0.5rem">
-            <p>I love catching fish, in this photo I am holding up a crappie which is a type of pan fish that can be caught in Minnesota.</p>
-          </div>
-          <div class="card">
-            <img src="IMAGES/20240602_110726.jpg" alt="additional hobby" style="width:100%;height:250px;object-fit:contain;border-radius:8px;margin-bottom:0.5rem">
-            <p>This is a Porsche Carrera GT I saw at a car show in Minneapolis Minnesota. It is a car with a value in the 7 figures and I love this photo.</p>
-          </div>
-          <div class="card" style="padding:1.5rem">
-            <h3>About My Hobbies</h3>
-            <p>Some of my favorite hobbies are weight lifting, cars, fishing, and snowbaording. I invest most of my time learning more about these things. Hobbies such as weight lifting are important to me because they help me grow as a person and by setting new goals I can achieve a better version of myself.</p>
-          </div>
-        </div>
-      </div>
-      
-      <div style="flex:0 0 300px">
-        <div class="card">
-          <img src="IMAGES/20240617_162304.jpg" alt="portrait hobby" style="width:100%;height:400px;object-fit:contain;border-radius:8px;margin-bottom:0.5rem">
-          <p>This was a Mediterranean spear fish I caught in Hawaii.</p>
-        </div>
-        
-        <div class="card" style="padding:1.5rem;margin-top:1rem">
-          <h3>Snowboarding</h3>
-          <p>During the winter while snowboarding I will spend many hours trying to learn a new trick on a jump or at the terrain park to improve my snowbaording skills.</p>
-        </div>
-      </div>
-    </section>
+    <article class="hobbies-showcase">
+      <section class="hobbies-main">
+        <div class="hobbies-grid">
+          <article class="hobby-card">
+            <img src="IMAGES/20250616_185103.jpg" alt="Luke's 2006 Acura TL at a car meet" class="hobby-image" loading="lazy">
+            <h2>Cars & Vehicles</h2>
+            <p>I have a deep passion for vehicles, from performance cars to custom motorcycles. This is my personal 2006 Acura TL, which I've modified with new wheels and other upgrades. I regularly attend car meets and enthusiast events to connect with fellow car lovers and stay updated on automotive trends.</p>
+          </article>
 
-    <section style="margin-top:2rem">
-      <div class="card" style="padding:1.5rem;text-align:center">
-        <h3>Contact</h3>
-        <p>Email: <a href="mailto:ridge067@d.umn.edu" style="color:var(--text);text-decoration:underline">ridge067@d.umn.edu</a></p>
-      </div>
-    </section>
+          <article class="hobby-card">
+            <img src="IMAGES/image000001(3).jpg" alt="Luke holding a crappie fish caught in Minnesota" class="hobby-image" loading="lazy">
+            <h2>Fishing</h2>
+            <p>Fishing is one of my favorite outdoor activities. I've had incredible experiences fishing in diverse locations including Hawaii and the Rocky Mountains, catching various species. It's always a good time fishing with my buddies, family, or both.</p>
+          </article>
+
+          <article class="hobby-card porsche-card">
+            <img src="IMAGES/20240602_110726.jpg" alt="Porsche Carrera GT at a car show in Minneapolis" class="hobby-image porsche-image" loading="lazy">
+            <h2>Automotive Shows</h2>
+            <p>Car shows and automotive events are where I spend much of my free time. Seeing rare and exotic vehicles like this Porsche Carrera GT in person is an incredible experience. These events inspire me and provide opportunities to learn about advanced automotive engineering and design.</p>
+          </article>
+        </div>
+      </section>
+
+      <aside class="hobbies-sidebar">
+        <article class="hobby-feature">
+          <figure>
+            <img src="IMAGES/20240617_162304.jpg" alt="Mediterranean spearfish caught in Hawaii" loading="lazy">
+            <figcaption>A Mediterranean spearfish I caught in Hawaii</figcaption>
+          </figure>
+        </article>
+        <article class="hobby-card info-card">
+          <h2>About My Hobbies</h2>
+          <p>My hobbies span diverse areas: weightlifting, cars, and fishing. I invest significant time into learning and excelling in these areas because I believe personal growth comes from challenging yourself and pursuing your passions. Weightlifting, for instance, isn't just about physical fitness—it's about discipline, goal-setting, and becoming a better version of myself every day.</p>
+        </article>
+      </aside>
+    </article>
+
+    <article class="car-story-section hobby-card">
+      <p>A personal experience of mine regarding my enthusiasm for cars was seeing a Nardo Grey Ferrari F-40 at the Barret Jackson Car show in Scottsdale Arizona.</p>
+    </article>
+
+    <article class="contact-section">
+      <h2>Get In Touch</h2>
+      <p>Interested in chatting about hobbies, outdoor activities, or anything else? Feel free to reach out!</p>
+      <address>
+        Email: <a href="mailto:ridge067@d.umn.edu">ridge067@d.umn.edu</a>
+      </address>
+    </article>
   </main>
-  <footer class="container">Contact: <a href="mailto:ridge067@d.umn.edu">ridge067@d.umn.edu</a></footer>
+
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2025 Luke Ridgeway. All rights reserved.</p>
+        <p>Built with HTML5, CSS3, and JavaScript</p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

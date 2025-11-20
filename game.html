@@ -3,796 +3,655 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Clash Royale Style Game</title>
+  <title>Pac-Man Game</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
   <style>
-    .game-container {
+    .pacman-container {
       display: flex;
       flex-direction: column;
-      height: 80vh;
-      background: linear-gradient(135deg, #2c5530, #1a3d1f);
-      border-radius: 12px;
-      overflow: hidden;
-      position: relative;
+      align-items: center;
+      gap: 1.5rem;
+      margin: 2rem 0;
     }
-    
+
     .game-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      width: 100%;
+      max-width: 560px;
+      background: var(--card);
       padding: 1rem;
-      background: rgba(0,0,0,0.3);
-      color: white;
-    }
-    
-    .elixir-bar {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-    }
-    
-    .elixir {
-      width: 20px;
-      height: 20px;
-      background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
-      border-radius: 50%;
-      border: 2px solid #fff;
-    }
-    
-    .timer {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #ffeb3b;
-    }
-    
-    .game-field {
-      flex: 1;
-      position: relative;
-      background: linear-gradient(180deg, #4a6741, #3d5530);
-      overflow: hidden;
-    }
-    
-    .tower {
-      position: absolute;
-      width: 60px;
-      height: 80px;
-      background: linear-gradient(135deg, #8b4513, #a0522d);
-      border: 3px solid #654321;
       border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .tower.king {
-      width: 80px;
-      height: 100px;
-      background: linear-gradient(135deg, #ffd700, #ffed4e);
-      border: 4px solid #ff8c00;
-    }
-    
-    .tower.arena {
-      width: 50px;
-      height: 70px;
-      background: linear-gradient(135deg, #696969, #808080);
-    }
-    
-    .health-bar {
-      position: absolute;
-      top: -8px;
-      left: -5px;
-      width: calc(100% + 10px);
-      height: 6px;
-      background: #333;
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    
-    .health-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00);
-      transition: width 0.3s ease;
-    }
-    
-    .unit {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      border: 2px solid #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
+      box-shadow: var(--card-shadow);
+      color: var(--text);
       font-weight: bold;
-      color: white;
-      cursor: pointer;
-      transition: all 0.1s ease;
+      font-size: 1.1rem;
     }
-    
-    .unit.knight {
-      background: linear-gradient(135deg, #4169e1, #6495ed);
-    }
-    
-    .unit.archer {
-      background: linear-gradient(135deg, #32cd32, #90ee90);
-    }
-    
-    .unit.giant {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, #8b4513, #a0522d);
-    }
-    
-    .unit.wizard {
-      background: linear-gradient(135deg, #9370db, #ba55d3);
-    }
-    
-    .unit.health-bar {
-      position: absolute;
-      top: -6px;
-      left: -2px;
-      width: calc(100% + 4px);
-      height: 4px;
-      background: #333;
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    
-    .unit.health-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00);
-      transition: width 0.2s ease;
-    }
-    
-    .card-deck {
+
+    .game-header div {
       display: flex;
       gap: 1rem;
-      padding: 1rem;
-      background: rgba(0,0,0,0.5);
-      justify-content: center;
+      align-items: center;
     }
-    
-    .card {
-      width: 80px;
-      height: 100px;
-      background: linear-gradient(135deg, #4a90e2, #357abd);
-      border: 3px solid #2c5aa0;
+
+    .game-canvas {
+      width: 560px;
+      height: 560px;
+      background: #000000;
+      border: 4px solid var(--accent);
       border-radius: 8px;
+      display: block;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+
+    .game-controls {
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
       justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      color: white;
-      font-weight: bold;
     }
-    
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-    
-    .card.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    
-    .card-cost {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      background: #ff6b6b;
-      color: white;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: bold;
-    }
-    
-    .game-over {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0,0,0,0.9);
-      color: white;
-      padding: 2rem;
-      border-radius: 12px;
+
+    .game-info {
       text-align: center;
-      z-index: 1000;
+      color: var(--text);
+      font-size: 1rem;
     }
-    
-    .projectile {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: #ffeb3b;
-      border-radius: 50%;
-      z-index: 10;
+
+    .game-info p {
+      margin: 0.5rem 0;
+    }
+
+    .key-hint {
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 1rem;
     }
   </style>
   </head>
 <body>
-  <nav class="container">
-    <div class="nav-inner"><div class="logo">MySite</div>
-      <button class="nav-toggle" aria-label="Toggle nav">☰</button>
-      <div class="nav-links"><a href="index.html">Home</a><a href="hobbies.html">Hobbies</a><a href="discover.html">Discover</a><a href="resume.html">Resume</a><a href="career.html">Career</a><a href="game.html">Game</a></div>
-      <button class="dark-mode-toggle" aria-label="Toggle theme">🌓</button>
-    </div>
-  </nav>
+  <header role="banner">
+    <nav class="container" aria-label="Main navigation">
+      <div class="nav-inner">
+        <a href="index.html" class="logo" aria-label="Luke Ridgeway Home">Luke Ridgeway</a>
+        <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="hobbies.html">Hobbies</a>
+          <a href="discover.html">Discover</a>
+          <a href="resume.html">Resume</a>
+          <a href="career.html">Career</a>
+          <a href="game.html" aria-current="page">Game</a>
+        </div>
+        <button class="dark-mode-toggle" aria-label="Toggle theme">Theme: Dark</button>
+      </div>
+    </nav>
+  </header>
   
-  <main class="container">
-    <h1>Clash Royale Style Battle</h1>
-    <p class="lead">Deploy units strategically to destroy your opponent's towers! 3-minute matches with AI opponent.</p>
+  <main class="container" role="main">
+    <header>
+      <h1>Pac-Man Game</h1>
+      <p class="lead">Eat all the pellets while avoiding ghosts! Collect power-ups to turn the tables.</p>
+    </header>
 
-    <div class="game-container">
+    <div class="pacman-container">
       <div class="game-header">
-        <div class="elixir-bar">
-          <span>Elixir:</span>
-          <div id="elixirDisplay"></div>
-        </div>
-        <div class="timer" id="timer">3:00</div>
         <div>Score: <span id="score">0</span></div>
+        <div>Lives: <span id="lives">3</span></div>
+        <div>Pellets: <span id="pelletsLeft">0</span></div>
       </div>
-      
-      <div class="game-field" id="gameField">
-        <!-- Player Towers -->
-        <div class="tower king" id="playerKing" style="bottom: 20px; left: 50px;">
-          <div class="health-bar">
-            <div class="health-fill" id="playerKingHealth"></div>
-          </div>
-          <div style="color: #ffd700; font-size: 10px;">KING</div>
-        </div>
-        
-        <div class="tower arena" id="playerArena1" style="bottom: 20px; left: 200px;">
-          <div class="health-bar">
-            <div class="health-fill" id="playerArena1Health"></div>
-          </div>
-        </div>
-        
-        <div class="tower arena" id="playerArena2" style="bottom: 20px; right: 200px;">
-          <div class="health-bar">
-            <div class="health-fill" id="playerArena2Health"></div>
-          </div>
-        </div>
-        
-        <!-- AI Towers -->
-        <div class="tower king" id="aiKing" style="top: 20px; right: 50px;">
-          <div class="health-bar">
-            <div class="health-fill" id="aiKingHealth"></div>
-          </div>
-          <div style="color: #ffd700; font-size: 10px;">KING</div>
-        </div>
-        
-        <div class="tower arena" id="aiArena1" style="top: 20px; right: 200px;">
-          <div class="health-bar">
-            <div class="health-fill" id="aiArena1Health"></div>
-          </div>
-        </div>
-        
-        <div class="tower arena" id="aiArena2" style="top: 20px; left: 200px;">
-          <div class="health-bar">
-            <div class="health-fill" id="aiArena2Health"></div>
-          </div>
-        </div>
+
+      <canvas id="gameCanvas" class="game-canvas" width="560" height="560"></canvas>
+
+      <div class="game-info">
+        <p id="gameStatus">Press Start Game to begin!</p>
+        <div class="key-hint">Use Arrow Keys to move Pac-Man • Space to pause/resume</div>
       </div>
-      
-      <div class="card-deck">
-        <div class="card" data-unit="knight" data-cost="3">
-          <div class="card-cost">3</div>
-          <div>⚔️</div>
-          <div style="font-size: 10px;">Knight</div>
-        </div>
-        <div class="card" data-unit="archer" data-cost="3">
-          <div class="card-cost">3</div>
-          <div>🏹</div>
-          <div style="font-size: 10px;">Archer</div>
-        </div>
-        <div class="card" data-unit="giant" data-cost="5">
-          <div class="card-cost">5</div>
-          <div>🛡️</div>
-          <div style="font-size: 10px;">Giant</div>
-        </div>
-        <div class="card" data-unit="wizard" data-cost="5">
-          <div class="card-cost">5</div>
-          <div>🔮</div>
-          <div style="font-size: 10px;">Wizard</div>
-        </div>
+
+      <div class="game-controls">
+        <button onclick="pacmanGame.startGame()" class="download-btn">Start Game</button>
+        <button onclick="pacmanGame.togglePause()" class="download-btn">Pause</button>
+        <button onclick="pacmanGame.resetGame()" class="download-btn">Reset</button>
       </div>
-    </div>
-    
-    <div style="margin-top: 1rem; text-align: center;">
-      <button onclick="startGame()" class="download-btn">Start New Game</button>
-      <button onclick="pauseGame()" class="download-btn" style="margin-left: 1rem;">Pause</button>
     </div>
   </main>
   
-  <footer class="container">Contact: <a href="mailto:ridge067@d.umn.edu">ridge067@d.umn.edu</a></footer>
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2025 Luke Ridgeway. All rights reserved.</p>
+        <p>Built with HTML5, CSS3, and JavaScript</p>
+      </div>
+    </div>
+  </footer>
 
   <script>
-    class ClashRoyaleGame {
+    class PacManGame {
       constructor() {
-        this.gameField = document.getElementById('gameField');
-        this.elixirDisplay = document.getElementById('elixirDisplay');
-        this.timer = document.getElementById('timer');
-        this.score = document.getElementById('score');
+        this.canvas = document.getElementById('gameCanvas');
+        this.ctx = this.canvas.getContext('2d');
         
-        this.elixir = 3;
-        this.maxElixir = 10;
-        this.timeLeft = 180; // 3 minutes
+        // Game dimensions
+        this.gridSize = 20; // Each cell is 20x20 pixels
+        this.cols = this.canvas.width / this.gridSize; // 28 columns
+        this.rows = this.canvas.height / this.gridSize; // 28 rows
+        
+        // Game state
         this.gameRunning = false;
         this.gamePaused = false;
-        this.units = [];
-        this.projectiles = [];
-        this.unitId = 0;
+        this.gameOver = false;
+        this.won = false;
         
-        this.towerHealth = {
-          playerKing: 2000,
-          playerArena1: 1000,
-          playerArena2: 1000,
-          aiKing: 2000,
-          aiArena1: 1000,
-          aiArena2: 1000
+        // Score and lives
+        this.score = 0;
+        this.lives = 3;
+        this.pelletsEaten = 0;
+        this.totalPellets = 0;
+        
+        // Pac-Man
+        this.pacman = {
+          x: 13,
+          y: 23,
+          direction: 0, // 0=right, 1=down, 2=left, 3=up
+          nextDirection: 0,
+          mouthOpen: true,
+          mouthTimer: 0
         };
         
-        this.unitTypes = {
-          knight: { health: 100, damage: 50, speed: 2, range: 30, cost: 3, size: 30 },
-          archer: { health: 60, damage: 30, speed: 1.5, range: 80, cost: 3, size: 30 },
-          giant: { health: 200, damage: 80, speed: 1, range: 25, cost: 5, size: 40 },
-          wizard: { health: 80, damage: 60, speed: 1.5, range: 70, cost: 5, size: 30 }
-        };
+        // Ghosts with different AI behaviors
+        this.ghosts = [
+          { x: 13, y: 7, color: '#FF0000', mode: 'chase', targetX: 0, targetY: 0, name: 'Blinky' },
+          { x: 12, y: 9, color: '#FFB8FF', mode: 'chase', targetX: 0, targetY: 0, name: 'Pinky' },
+          { x: 13, y: 9, color: '#00FFFF', mode: 'chase', targetX: 0, targetY: 0, name: 'Inky' },
+          { x: 14, y: 9, color: '#FFB897', mode: 'chase', targetX: 0, targetY: 0, name: 'Clyde' }
+        ];
         
-        this.init();
+        this.powerUpActive = false;
+        this.powerUpTimer = 0;
+        this.powerUpDuration = 300; // 5 seconds at 60fps
+        
+        // Maze
+        this.maze = this.generateMaze();
+        
+        // Input handling
+        this.keys = {};
+        this.setupInputHandlers();
+        
+        // Game loop
+        this.frameCount = 0;
       }
       
-      init() {
-        this.updateElixirDisplay();
-        this.updateHealthBars();
-        this.setupEventListeners();
-        this.startElixirGeneration();
-      }
-      
-      setupEventListeners() {
-        const cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-          card.addEventListener('click', () => {
-            if (!this.gameRunning || this.gamePaused) return;
-            const unitType = card.dataset.unit;
-            const cost = parseInt(card.dataset.cost);
-            if (this.elixir >= cost) {
-              this.deployUnit(unitType, 'player');
-              this.elixir -= cost;
-              this.updateElixirDisplay();
+      generateMaze() {
+        // 0 = walkable, 1 = wall
+        const maze = Array(this.rows).fill(null).map(() => Array(this.cols).fill(0));
+        
+        // Create outer walls
+        for (let x = 0; x < this.cols; x++) {
+          maze[0][x] = 1;
+          maze[this.rows - 1][x] = 1;
+        }
+        for (let y = 0; y < this.rows; y++) {
+          maze[y][0] = 1;
+          maze[y][this.cols - 1] = 1;
+        }
+        
+        // Create internal walls
+        const wallPatterns = [
+          { x: 1, y: 1, w: 6, h: 4 },
+          { x: 8, y: 1, w: 6, h: 4 },
+          { x: 15, y: 1, w: 6, h: 4 },
+          { x: 22, y: 1, w: 6, h: 4 },
+          { x: 1, y: 7, w: 3, h: 3 },
+          { x: 10, y: 7, w: 3, h: 3 },
+          { x: 15, y: 7, w: 3, h: 3 },
+          { x: 24, y: 7, w: 3, h: 3 },
+          { x: 5, y: 12, w: 4, h: 3 },
+          { x: 19, y: 12, w: 4, h: 3 },
+          { x: 1, y: 18, w: 6, h: 3 },
+          { x: 10, y: 18, w: 6, h: 3 },
+          { x: 15, y: 18, w: 6, h: 3 },
+          { x: 22, y: 18, w: 6, h: 3 }
+        ];
+        
+        wallPatterns.forEach(pattern => {
+          for (let y = pattern.y; y < pattern.y + pattern.h; y++) {
+            for (let x = pattern.x; x < pattern.x + pattern.w; x++) {
+              if (y >= 0 && y < this.rows && x >= 0 && x < this.cols) {
+                maze[y][x] = 1;
+              }
             }
-          });
+          }
+        });
+        
+        return maze;
+      }
+      
+      generatePellets() {
+        this.pellets = [];
+        this.powerUps = [];
+        
+        for (let y = 1; y < this.rows - 1; y++) {
+          for (let x = 1; x < this.cols - 1; x++) {
+            if (this.maze[y][x] === 0) {
+              // Empty space, add pellet
+              const distance = Math.abs(x - this.pacman.x) + Math.abs(y - this.pacman.y);
+              if (distance > 2) {
+                this.pellets.push({ x, y, eaten: false });
+              }
+            }
+          }
+        }
+        
+        // Add power-ups in corners
+        this.powerUps = [
+          { x: 1, y: 1 },
+          { x: 26, y: 1 },
+          { x: 1, y: 26 },
+          { x: 26, y: 26 }
+        ];
+        
+        this.totalPellets = this.pellets.length;
+        this.updateUI();
+      }
+      
+      setupInputHandlers() {
+        document.addEventListener('keydown', (e) => {
+          this.keys[e.key] = true;
+          
+          if (e.key === ' ') {
+            e.preventDefault();
+            this.togglePause();
+          }
+          
+          // Arrow key handling
+          if (e.key === 'ArrowUp') {
+            this.pacman.nextDirection = 3;
+            e.preventDefault();
+          }
+          if (e.key === 'ArrowDown') {
+            this.pacman.nextDirection = 1;
+            e.preventDefault();
+          }
+          if (e.key === 'ArrowLeft') {
+            this.pacman.nextDirection = 2;
+            e.preventDefault();
+          }
+          if (e.key === 'ArrowRight') {
+            this.pacman.nextDirection = 0;
+            e.preventDefault();
+          }
+        });
+        
+        document.addEventListener('keyup', (e) => {
+          this.keys[e.key] = false;
         });
       }
       
       startGame() {
         this.gameRunning = true;
         this.gamePaused = false;
-        this.timeLeft = 180;
-        this.elixir = 3;
-        this.units = [];
-        this.projectiles = [];
-        this.unitId = 0;
+        this.gameOver = false;
+        this.won = false;
+        this.score = 0;
+        this.lives = 3;
+        this.pelletsEaten = 0;
+        this.powerUpActive = false;
+        this.frameCount = 0;
         
-        // Reset tower health
-        Object.keys(this.towerHealth).forEach(tower => {
-          this.towerHealth[tower] = tower.includes('King') ? 2000 : 1000;
+        this.pacman.x = 13;
+        this.pacman.y = 23;
+        this.pacman.direction = 0;
+        
+        this.ghosts.forEach((ghost, i) => {
+          ghost.x = 12 + i - 1;
+          ghost.y = 9;
         });
         
-        this.updateElixirDisplay();
-        this.updateHealthBars();
-        this.startTimer();
-        this.startAI();
-        this.startGameLoop();
+        this.generatePellets();
+        this.updateUI();
+        this.gameLoop();
       }
       
-      pauseGame() {
+      togglePause() {
+        if (!this.gameRunning) return;
         this.gamePaused = !this.gamePaused;
+        const statusEl = document.getElementById('gameStatus');
+        statusEl.textContent = this.gamePaused ? '⏸ PAUSED' : 'Playing...';
       }
       
-      startElixirGeneration() {
-        setInterval(() => {
-          if (this.gameRunning && !this.gamePaused && this.elixir < this.maxElixir) {
-            this.elixir++;
-            this.updateElixirDisplay();
-          }
-        }, 2000);
-      }
-      
-      startTimer() {
-        const timerInterval = setInterval(() => {
-          if (!this.gameRunning || this.gamePaused) return;
-          
-          this.timeLeft--;
-          const minutes = Math.floor(this.timeLeft / 60);
-          const seconds = this.timeLeft % 60;
-          this.timer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-          
-          if (this.timeLeft <= 0) {
-            clearInterval(timerInterval);
-            this.endGame();
-          }
-        }, 1000);
-      }
-      
-      startAI() {
-        setInterval(() => {
-          if (!this.gameRunning || this.gamePaused) return;
-          
-          // AI deploys units randomly
-          if (Math.random() < 0.3 && this.elixir >= 3) {
-            const unitTypes = Object.keys(this.unitTypes);
-            const randomUnit = unitTypes[Math.floor(Math.random() * unitTypes.length)];
-            const cost = this.unitTypes[randomUnit].cost;
-            
-            if (this.elixir >= cost) {
-              this.deployUnit(randomUnit, 'ai');
-              this.elixir -= cost;
-              this.updateElixirDisplay();
-            }
-          }
-        }, 3000);
-      }
-      
-      deployUnit(unitType, side) {
-        const unitData = this.unitTypes[unitType];
-        const unit = {
-          id: this.unitId++,
-          type: unitType,
-          side: side,
-          x: side === 'player' ? 100 : 700,
-          y: side === 'player' ? 150 : 250,
-          health: unitData.health,
-          maxHealth: unitData.health,
-          damage: unitData.damage,
-          speed: unitData.speed,
-          range: unitData.range,
-          size: unitData.size,
-          target: null,
-          lastAttack: 0
-        };
-        
-        this.units.push(unit);
-        this.renderUnit(unit);
-      }
-      
-      renderUnit(unit) {
-        const unitElement = document.createElement('div');
-        unitElement.className = `unit ${unit.type}`;
-        unitElement.id = `unit-${unit.id}`;
-        unitElement.style.left = unit.x + 'px';
-        unitElement.style.top = unit.y + 'px';
-        unitElement.style.width = unit.size + 'px';
-        unitElement.style.height = unit.size + 'px';
-        
-        // Health bar
-        const healthBar = document.createElement('div');
-        healthBar.className = 'unit health-bar';
-        const healthFill = document.createElement('div');
-        healthFill.className = 'unit health-fill';
-        healthFill.style.width = '100%';
-        healthBar.appendChild(healthFill);
-        unitElement.appendChild(healthBar);
-        
-        this.gameField.appendChild(unitElement);
-      }
-      
-      startGameLoop() {
-        const gameLoop = () => {
-          if (!this.gameRunning || this.gamePaused) {
-            requestAnimationFrame(gameLoop);
-            return;
-          }
-          
-          this.updateUnits();
-          this.updateProjectiles();
-          this.checkGameEnd();
-          
-          requestAnimationFrame(gameLoop);
-        };
-        requestAnimationFrame(gameLoop);
-      }
-      
-      updateUnits() {
-        this.units.forEach(unit => {
-          if (unit.health <= 0) {
-            this.removeUnit(unit);
-            return;
-          }
-          
-          // Find target
-          if (!unit.target || unit.target.health <= 0) {
-            unit.target = this.findTarget(unit);
-          }
-          
-          if (unit.target) {
-            const distance = this.getDistance(unit, unit.target);
-            
-            if (distance <= unit.range) {
-              // Attack
-              if (Date.now() - unit.lastAttack > 1000) {
-                this.attack(unit, unit.target);
-                unit.lastAttack = Date.now();
-              }
-            } else {
-              // Move towards target
-              this.moveUnit(unit, unit.target);
-            }
-          } else {
-            // Move towards nearest tower
-            const nearestTower = this.findNearestTower(unit);
-            if (nearestTower) {
-              this.moveUnit(unit, nearestTower);
-            }
-          }
-          
-          this.updateUnitPosition(unit);
-        });
-      }
-      
-      findTarget(unit) {
-        const enemies = this.units.filter(u => u.side !== unit.side && u.health > 0);
-        if (enemies.length === 0) return null;
-        
-        // Find closest enemy
-        let closest = null;
-        let closestDistance = Infinity;
-        
-        enemies.forEach(enemy => {
-          const distance = this.getDistance(unit, enemy);
-          if (distance < closestDistance) {
-            closest = enemy;
-            closestDistance = distance;
-          }
-        });
-        
-        return closest;
-      }
-      
-      findNearestTower(unit) {
-        const towers = unit.side === 'player' ? 
-          ['aiKing', 'aiArena1', 'aiArena2'] : 
-          ['playerKing', 'playerArena1', 'playerArena2'];
-        
-        let nearest = null;
-        let nearestDistance = Infinity;
-        
-        towers.forEach(towerId => {
-          const tower = this.getTowerPosition(towerId);
-          const distance = Math.sqrt(
-            Math.pow(unit.x - tower.x, 2) + Math.pow(unit.y - tower.y, 2)
-          );
-          if (distance < nearestDistance) {
-            nearest = { id: towerId, x: tower.x, y: tower.y };
-            nearestDistance = distance;
-          }
-        });
-        
-        return nearest;
-      }
-      
-      getTowerPosition(towerId) {
-        const tower = document.getElementById(towerId);
-        const rect = tower.getBoundingClientRect();
-        const fieldRect = this.gameField.getBoundingClientRect();
-        return {
-          x: rect.left - fieldRect.left + rect.width / 2,
-          y: rect.top - fieldRect.top + rect.height / 2
-        };
-      }
-      
-      moveUnit(unit, target) {
-        const dx = target.x - unit.x;
-        const dy = target.y - unit.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance > 0) {
-          const moveX = (dx / distance) * unit.speed;
-          const moveY = (dy / distance) * unit.speed;
-          
-          unit.x += moveX;
-          unit.y += moveY;
-        }
-      }
-      
-      attack(unit, target) {
-        if (target.health <= 0) return;
-        
-        // Create projectile for ranged units
-        if (unit.type === 'archer' || unit.type === 'wizard') {
-          this.createProjectile(unit, target);
-        } else {
-          // Melee attack
-          target.health -= unit.damage;
-          if (target.health <= 0) {
-            target.health = 0;
-            this.removeUnit(target);
-          }
-        }
-      }
-      
-      createProjectile(unit, target) {
-        const projectile = {
-          id: Date.now(),
-          x: unit.x + unit.size / 2,
-          y: unit.y + unit.size / 2,
-          targetX: target.x + target.size / 2,
-          targetY: target.y + target.size / 2,
-          damage: unit.damage,
-          target: target
-        };
-        
-        this.projectiles.push(projectile);
-        this.renderProjectile(projectile);
-      }
-      
-      renderProjectile(projectile) {
-        const projectileElement = document.createElement('div');
-        projectileElement.className = 'projectile';
-        projectileElement.id = `projectile-${projectile.id}`;
-        projectileElement.style.left = projectile.x + 'px';
-        projectileElement.style.top = projectile.y + 'px';
-        this.gameField.appendChild(projectileElement);
-      }
-      
-      updateProjectiles() {
-        this.projectiles.forEach(projectile => {
-          const dx = projectile.targetX - projectile.x;
-          const dy = projectile.targetY - projectile.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          if (distance < 10) {
-            // Hit target
-            projectile.target.health -= projectile.damage;
-            if (projectile.target.health <= 0) {
-              projectile.target.health = 0;
-              this.removeUnit(projectile.target);
-            }
-            this.removeProjectile(projectile);
-          } else {
-            // Move projectile
-            const speed = 5;
-            projectile.x += (dx / distance) * speed;
-            projectile.y += (dy / distance) * speed;
-            
-            const element = document.getElementById(`projectile-${projectile.id}`);
-            if (element) {
-              element.style.left = projectile.x + 'px';
-              element.style.top = projectile.y + 'px';
-            }
-          }
-        });
-      }
-      
-      removeUnit(unit) {
-        const index = this.units.indexOf(unit);
-        if (index > -1) {
-          this.units.splice(index, 1);
-        }
-        
-        const element = document.getElementById(`unit-${unit.id}`);
-        if (element) {
-          element.remove();
-        }
-      }
-      
-      removeProjectile(projectile) {
-        const index = this.projectiles.indexOf(projectile);
-        if (index > -1) {
-          this.projectiles.splice(index, 1);
-        }
-        
-        const element = document.getElementById(`projectile-${projectile.id}`);
-        if (element) {
-          element.remove();
-        }
-      }
-      
-      updateUnitPosition(unit) {
-        const element = document.getElementById(`unit-${unit.id}`);
-        if (element) {
-          element.style.left = unit.x + 'px';
-          element.style.top = unit.y + 'px';
-          
-          // Update health bar
-          const healthFill = element.querySelector('.unit.health-fill');
-          if (healthFill) {
-            const healthPercent = (unit.health / unit.maxHealth) * 100;
-            healthFill.style.width = healthPercent + '%';
-          }
-        }
-      }
-      
-      getDistance(unit1, unit2) {
-        return Math.sqrt(
-          Math.pow(unit1.x - unit2.x, 2) + Math.pow(unit1.y - unit2.y, 2)
-        );
-      }
-      
-      updateElixirDisplay() {
-        this.elixirDisplay.innerHTML = '';
-        for (let i = 0; i < this.maxElixir; i++) {
-          const elixirDot = document.createElement('div');
-          elixirDot.className = 'elixir';
-          if (i < this.elixir) {
-            elixirDot.style.opacity = '1';
-          } else {
-            elixirDot.style.opacity = '0.3';
-          }
-          this.elixirDisplay.appendChild(elixirDot);
-        }
-      }
-      
-      updateHealthBars() {
-        Object.keys(this.towerHealth).forEach(towerId => {
-          const healthBar = document.getElementById(towerId + 'Health');
-          if (healthBar) {
-            const maxHealth = towerId.includes('King') ? 2000 : 1000;
-            const healthPercent = (this.towerHealth[towerId] / maxHealth) * 100;
-            healthBar.style.width = healthPercent + '%';
-          }
-        });
-      }
-      
-      checkGameEnd() {
-        const playerTowersAlive = this.towerHealth.playerKing > 0 || 
-                                 this.towerHealth.playerArena1 > 0 || 
-                                 this.towerHealth.playerArena2 > 0;
-        const aiTowersAlive = this.towerHealth.aiKing > 0 || 
-                             this.towerHealth.aiArena1 > 0 || 
-                             this.towerHealth.aiArena2 > 0;
-        
-        if (!playerTowersAlive || !aiTowersAlive || this.timeLeft <= 0) {
-          this.endGame();
-        }
-      }
-      
-      endGame() {
+      resetGame() {
         this.gameRunning = false;
+        this.gamePaused = false;
+        this.gameOver = false;
+        this.won = false;
+        document.getElementById('gameStatus').textContent = 'Press Start Game to begin!';
+        this.ctx.fillStyle = '#000000';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      }
+      
+      gameLoop() {
+        if (!this.gameRunning) return;
         
-        let winner = 'Draw';
-        if (this.towerHealth.playerKing <= 0 && this.towerHealth.playerArena1 <= 0 && this.towerHealth.playerArena2 <= 0) {
-          winner = 'AI Wins!';
-        } else if (this.towerHealth.aiKing <= 0 && this.towerHealth.aiArena1 <= 0 && this.towerHealth.aiArena2 <= 0) {
-          winner = 'You Win!';
-        } else if (this.timeLeft <= 0) {
-          winner = 'Time\'s Up!';
+        if (!this.gamePaused) {
+          this.update();
         }
         
-        alert(`Game Over! ${winner}`);
+        this.draw();
+        requestAnimationFrame(() => this.gameLoop());
+      }
+      
+      update() {
+        // Update power-up timer
+        if (this.powerUpActive) {
+          this.powerUpTimer--;
+          if (this.powerUpTimer <= 0) {
+            this.powerUpActive = false;
+            this.ghosts.forEach(g => g.mode = 'chase');
+          }
+        }
+        
+        // Try to move Pac-Man in the desired direction
+        if (this.frameCount % 6 === 0) { // Pac-Man moves every 6 frames (slower)
+          const nextX = this.pacman.x + this.getDirectionX(this.pacman.nextDirection);
+          const nextY = this.pacman.y + this.getDirectionY(this.pacman.nextDirection);
+          
+          if (this.isWalkable(nextX, nextY)) {
+            this.pacman.direction = this.pacman.nextDirection;
+            this.pacman.x = nextX;
+            this.pacman.y = nextY;
+          } else {
+            // Try to continue in current direction
+            const currX = this.pacman.x + this.getDirectionX(this.pacman.direction);
+            const currY = this.pacman.y + this.getDirectionY(this.pacman.direction);
+            if (this.isWalkable(currX, currY)) {
+              this.pacman.x = currX;
+              this.pacman.y = currY;
+            }
+          }
+          
+          // Mouth animation
+          this.pacman.mouthTimer++;
+          if (this.pacman.mouthTimer > 8) {
+            this.pacman.mouthOpen = !this.pacman.mouthOpen;
+            this.pacman.mouthTimer = 0;
+          }
+        }
+        
+        // Check pellet collision
+        this.checkPelletCollision();
+        
+        // Check power-up collision
+        this.checkPowerUpCollision();
+        
+        // Move ghosts
+        if (this.frameCount % 7 === 0) { // Ghosts move every 7 frames (slower)
+          this.ghosts.forEach(ghost => {
+            this.moveGhost(ghost);
+          });
+        }
+        
+        // Check ghost collision
+        this.checkGhostCollision();
+        
+        // Check win condition
+        if (this.pelletsEaten === this.totalPellets) {
+          this.won = true;
+          this.gameRunning = false;
+          document.getElementById('gameStatus').textContent = '🎉 YOU WIN! All pellets eaten!';
+        }
+        
+        this.frameCount++;
+      }
+      
+      getDirectionX(direction) {
+        return direction === 0 ? 1 : direction === 2 ? -1 : 0;
+      }
+      
+      getDirectionY(direction) {
+        return direction === 1 ? 1 : direction === 3 ? -1 : 0;
+      }
+      
+      isWalkable(x, y) {
+        if (x < 0 || x >= this.cols || y < 0 || y >= this.rows) return false;
+        return this.maze[y][x] === 0;
+      }
+      
+      checkPelletCollision() {
+        this.pellets.forEach(pellet => {
+          if (pellet.x === this.pacman.x && pellet.y === this.pacman.y && !pellet.eaten) {
+            pellet.eaten = true;
+            this.score += 10;
+            this.pelletsEaten++;
+            this.updateUI();
+          }
+        });
+      }
+      
+      checkPowerUpCollision() {
+        this.powerUps.forEach(powerUp => {
+          if (powerUp.x === this.pacman.x && powerUp.y === this.pacman.y && !powerUp.eaten) {
+            powerUp.eaten = true;
+            this.powerUpActive = true;
+            this.powerUpTimer = this.powerUpDuration;
+            this.score += 50;
+            this.ghosts.forEach(g => g.mode = 'scatter');
+            this.updateUI();
+          }
+        });
+      }
+      
+      moveGhost(ghost) {
+        // Determine ghost target based on personality (for splitting up)
+        let targetX, targetY;
+        
+        if (this.powerUpActive) {
+          // All ghosts run away during power-up
+          targetX = this.pacman.x;
+          targetY = this.pacman.y;
+        } else {
+          // Each ghost has unique behavior
+          if (ghost.name === 'Blinky') {
+            // Red ghost: Direct chase to Pac-Man
+            targetX = this.pacman.x;
+            targetY = this.pacman.y;
+          } else if (ghost.name === 'Pinky') {
+            // Pink ghost: Chase ahead of Pac-Man but less accurately
+            const aheadDistance = 2;
+            targetX = this.pacman.x + this.getDirectionX(this.pacman.direction) * aheadDistance;
+            targetY = this.pacman.y + this.getDirectionY(this.pacman.direction) * aheadDistance;
+          } else if (ghost.name === 'Inky') {
+            // Cyan ghost: Weaker ambush - random factor makes it less precise
+            const blinky = this.ghosts[0];
+            const randomOffset = Math.random() * 3 - 1.5;
+            targetX = this.pacman.x + (this.pacman.x - blinky.x) / 4 + randomOffset;
+            targetY = this.pacman.y + (this.pacman.y - blinky.y) / 4 + randomOffset;
+          } else if (ghost.name === 'Clyde') {
+            // Orange ghost: Chase Pac-Man if far, retreat to corner if close
+            const distance = Math.abs(ghost.x - this.pacman.x) + Math.abs(ghost.y - this.pacman.y);
+            if (distance > 12) {
+              targetX = this.pacman.x;
+              targetY = this.pacman.y;
+            } else {
+              // Retreat to bottom-right corner
+              targetX = 26;
+              targetY = 26;
+            }
+          }
+        }
+        
+        // Pathfinding: evaluate moves and pick best one
+        let possibleMoves = [];
+        const directions = [0, 1, 2, 3];
+        
+        directions.forEach(dir => {
+          const nx = ghost.x + this.getDirectionX(dir);
+          const ny = ghost.y + this.getDirectionY(dir);
+          if (this.isWalkable(nx, ny)) {
+            // Calculate Manhattan distance to target
+            let distance = Math.abs(nx - targetX) + Math.abs(ny - targetY);
+            possibleMoves.push({ dir, x: nx, y: ny, distance });
+          }
+        });
+        
+        if (possibleMoves.length > 0) {
+          if (this.powerUpActive) {
+            // Run away: choose furthest from Pac-Man
+            possibleMoves.sort((a, b) => b.distance - a.distance);
+          } else {
+            // Chase: choose closest to target
+            possibleMoves.sort((a, b) => a.distance - b.distance);
+          }
+          
+          ghost.x = possibleMoves[0].x;
+          ghost.y = possibleMoves[0].y;
+        }
+      }
+      
+      checkGhostCollision() {
+        this.ghosts.forEach(ghost => {
+          if (ghost.x === this.pacman.x && ghost.y === this.pacman.y) {
+            if (this.powerUpActive) {
+              // Eat ghost
+              ghost.x = 13;
+              ghost.y = 9;
+              this.score += 100;
+              this.updateUI();
+            } else {
+              // Lose life
+              this.lives--;
+              this.updateUI();
+              
+              if (this.lives <= 0) {
+                this.gameRunning = false;
+                document.getElementById('gameStatus').textContent = '💀 GAME OVER! No more lives!';
+              } else {
+                // Reset positions
+                this.pacman.x = 13;
+                this.pacman.y = 23;
+                this.ghosts.forEach((g, i) => {
+                  g.x = 12 + i - 1;
+                  g.y = 9;
+                });
+              }
+            }
+          }
+        });
+      }
+      
+      updateUI() {
+        document.getElementById('score').textContent = this.score;
+        document.getElementById('lives').textContent = this.lives;
+        document.getElementById('pelletsLeft').textContent = this.totalPellets - this.pelletsEaten;
+      }
+      
+      draw() {
+        // Get computed styles for theme colors
+        const wallColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+        
+        // Clear canvas with black background
+        this.ctx.fillStyle = '#000000';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // Draw maze walls with theme accent
+        this.ctx.fillStyle = wallColor || '#2563eb';
+        for (let y = 0; y < this.rows; y++) {
+          for (let x = 0; x < this.cols; x++) {
+            if (this.maze[y][x] === 1) {
+              this.ctx.fillRect(x * this.gridSize, y * this.gridSize, this.gridSize, this.gridSize);
+            }
+          }
+        }
+        
+        // Draw pellets
+        this.ctx.fillStyle = '#FFB8DB';
+        this.pellets.forEach(pellet => {
+          if (!pellet.eaten) {
+            this.ctx.fillRect(
+              pellet.x * this.gridSize + 8,
+              pellet.y * this.gridSize + 8,
+              4,
+              4
+            );
+          }
+        });
+        
+        // Draw power-ups
+        const pulse = (Math.sin(this.frameCount / 10) + 1) / 2;
+        this.ctx.fillStyle = `rgba(255, 184, 219, ${0.5 + pulse * 0.5})`;
+        this.powerUps.forEach(powerUp => {
+          if (!powerUp.eaten) {
+            this.ctx.beginPath();
+            this.ctx.arc(
+              powerUp.x * this.gridSize + 10,
+              powerUp.y * this.gridSize + 10,
+              6 + pulse * 2,
+              0,
+              Math.PI * 2
+            );
+            this.ctx.fill();
+          }
+        });
+        
+        // Draw Pac-Man
+        this.drawPacMan();
+        
+        // Draw ghosts
+        this.ghosts.forEach(ghost => {
+          this.drawGhost(ghost);
+        });
+      }
+      
+      drawPacMan() {
+        const x = this.pacman.x * this.gridSize + 10;
+        const y = this.pacman.y * this.gridSize + 10;
+        const radius = 8;
+        
+        this.ctx.fillStyle = '#FFFF00';
+        this.ctx.beginPath();
+        
+        let mouthAngle = this.pacman.mouthOpen ? 0.3 : 0;
+        const startAngle = this.pacman.direction * Math.PI / 2 + mouthAngle;
+        const endAngle = this.pacman.direction * Math.PI / 2 + Math.PI * 2 - mouthAngle;
+        
+        this.ctx.arc(x, y, radius, startAngle, endAngle);
+        this.ctx.lineTo(x, y);
+        this.ctx.fill();
+      }
+      
+      drawGhost(ghost) {
+        const x = ghost.x * this.gridSize;
+        const y = ghost.y * this.gridSize;
+        
+        this.ctx.fillStyle = ghost.mode === 'scatter' && this.powerUpActive ? '#0033FF' : ghost.color;
+        
+        // Ghost body
+        this.ctx.fillRect(x + 2, y + 2, 16, 14);
+        this.ctx.beginPath();
+        this.ctx.arc(x + 10, y + 8, 8, Math.PI, 0);
+        this.ctx.fill();
+        
+        // Ghost bumps
+        for (let i = 0; i < 4; i++) {
+          this.ctx.fillRect(x + 3 + i * 4, y + 16, 2, 2);
+        }
+        
+        // Ghost eyes
+        this.ctx.fillStyle = '#FFF';
+        this.ctx.fillRect(x + 5, y + 6, 2, 2);
+        this.ctx.fillRect(x + 11, y + 6, 2, 2);
+        this.ctx.fillStyle = '#000';
+        this.ctx.fillRect(x + 6, y + 6, 1, 1);
+        this.ctx.fillRect(x + 12, y + 6, 1, 1);
       }
     }
     
-    let game;
-    
-    function startGame() {
-      if (game) {
-        game.startGame();
-      } else {
-        game = new ClashRoyaleGame();
-        game.startGame();
-      }
-    }
-    
-    function pauseGame() {
-      if (game) {
-        game.pauseGame();
-      }
-    }
-    
-    // Initialize game when page loads
+    // Initialize game
+    let pacmanGame;
     document.addEventListener('DOMContentLoaded', () => {
-      game = new ClashRoyaleGame();
+      pacmanGame = new PacManGame();
     });
   </script>
 </body>

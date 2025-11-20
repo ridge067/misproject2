@@ -1,8 +1,8 @@
 // Site-wide JS: theme toggle, nav, and simple helpers
 document.addEventListener('DOMContentLoaded', ()=>{
-  // Theme persisted toggle
-  const theme = localStorage.getItem('site-theme') || 'light'
-  if(theme==='dark') document.documentElement.setAttribute('data-theme','dark')
+  // Theme persisted toggle - defaults to dark mode
+  const theme = localStorage.getItem('site-theme') || 'dark'
+  document.documentElement.setAttribute('data-theme', theme)
 
   const toggles = document.querySelectorAll('[data-toggle-theme]')
   toggles.forEach(t=>t.addEventListener('click', ()=>{
@@ -13,11 +13,22 @@ document.addEventListener('DOMContentLoaded', ()=>{
   }))
 
   // Also support buttons with class .dark-mode-toggle
+  const updateThemeButton = () => {
+    const current = document.documentElement.getAttribute('data-theme')
+    const themeText = current === 'dark' ? 'Dark' : 'Light'
+    document.querySelectorAll('.dark-mode-toggle').forEach(btn => {
+      btn.textContent = `Theme: ${themeText}`
+    })
+  }
+  
+  updateThemeButton() // Set initial text
+  
   document.querySelectorAll('.dark-mode-toggle').forEach(btn=>btn.addEventListener('click', ()=>{
     const current = document.documentElement.getAttribute('data-theme')
     const next = current==='dark' ? 'light' : 'dark'
     document.documentElement.setAttribute('data-theme', next)
     localStorage.setItem('site-theme', next)
+    updateThemeButton() // Update button text after theme change
   }))
 
   // Simple mobile nav toggle
@@ -42,6 +53,44 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const href = a.getAttribute('href')
     if(href && href.indexOf(currentPath) !== -1) a.classList.add('active')
   })
+
+  // Resume image modal functionality
+  const resumeModal = document.getElementById('resumeModal')
+  const resumeModalImg = document.getElementById('resumeModalImg')
+  const resumePreviewImg = document.querySelector('.resume-preview-img')
+  const resumeModalClose = document.querySelector('.resume-modal-close')
+  
+  if (resumePreviewImg && resumeModal && resumeModalImg) {
+    resumePreviewImg.addEventListener('click', () => {
+      resumeModal.style.display = 'block'
+      resumeModalImg.src = resumePreviewImg.src
+      resumeModalImg.alt = resumePreviewImg.alt
+      document.body.style.overflow = 'hidden' // Prevent background scrolling
+    })
+    
+    if (resumeModalClose) {
+      resumeModalClose.addEventListener('click', () => {
+        resumeModal.style.display = 'none'
+        document.body.style.overflow = 'auto'
+      })
+    }
+    
+    // Close modal when clicking outside the image
+    resumeModal.addEventListener('click', (e) => {
+      if (e.target === resumeModal) {
+        resumeModal.style.display = 'none'
+        document.body.style.overflow = 'auto'
+      }
+    })
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && resumeModal.style.display === 'block') {
+        resumeModal.style.display = 'none'
+        document.body.style.overflow = 'auto'
+      }
+    })
+  }
 
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {

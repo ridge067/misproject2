@@ -2,90 +2,100 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Home — MySite</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Luke Ridgeway - Personal portfolio showcasing professional skills, hobbies, career interests and projects.">
+  <meta name="keywords" content="portfolio, finance, career, education, hobbies">
+  <meta name="author" content="Luke Ridgeway">
+  <title>Home — Luke Ridgeway Portfolio</title>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
 <body>
-  <nav class="container">
-    <div class="nav-inner">
-      <div class="logo">MySite</div>
-      <button class="nav-toggle" aria-label="Toggle nav">☰</button>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="hobbies.html">Hobbies</a>
-        <a href="discover.html">Discover</a>
-        <a href="resume.html">Resume</a>
-        <a href="career.html">Career</a>
-        <a href="game.html">Game</a>
+  <header role="banner">
+    <nav class="container" aria-label="Main navigation">
+      <div class="nav-inner">
+        <a href="index.html" class="logo" aria-label="Luke Ridgeway Home">Luke Ridgeway</a>
+        <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
+        <div class="nav-links">
+          <a href="index.html" aria-current="page">Home</a>
+          <a href="hobbies.html">Hobbies</a>
+          <a href="discover.html">Discover</a>
+          <a href="resume.html">Resume</a>
+          <a href="career.html">Career</a>
+          <a href="game.html">Game</a>
+        </div>
+        <button class="dark-mode-toggle" aria-label="Toggle theme">Theme: Dark</button>
       </div>
-      <button class="dark-mode-toggle" aria-label="Toggle theme">🌓</button>
-    </div>
-  </nav>
+    </nav>
+  </header>
 
-  <main class="container">
-    <section style="margin-top:1.5rem;display:flex;gap:2rem;align-items:flex-start">
-      <div style="flex:0 0 40%">
-        <div class="hero-card">
-          <h1>Welcome — Luke Ridgeway</h1>
-          <p class="lead">I'm a passionate professional combining strong technical skills with creative problem solving. Replace this with your professional intro.</p>
-          <div style="display:flex;gap:1rem;align-items:center;margin-top:1rem">
-            <a class="cta" href="resume.html">View Resume</a>
-            <a class="cta" href="career.html" style="background:#10b981">Career Interests</a>
-          </div>
-        </div>
+  <main class="container" role="main">
+    <article class="hero-section">
+      <section class="hero-content">
+        <aside class="profile-section">
+          <figure>
+            <img src="IMAGES/Snapchat-164561489.jpg" alt="Luke Ridgeway headshot" class="profile-pic" loading="lazy">
+            <figcaption class="sr-only">Professional headshot of Luke Ridgeway</figcaption>
+          </figure>
+        </aside>
 
-        <div class="hobby" style="margin-top:1.5rem">
-          <img src="images/Snapchat-164561489.jpg" alt="Headshot" class="profile-pic" style="width:250px;height:250px">
-          <div style="margin-top:1rem">
-            <h3>About Me</h3>
-              <p class="muted">My name is Luke Ridgeway, I am 19 years old and go to University of Minnesota Duluth.</p>
-          </div>
-        </div>
-        
-        <div class="card" style="padding:1rem;margin-top:1.5rem">
-          <h3>Welcome Video</h3>
-          <video controls width="100%" height="300" preload="auto" style="background:#000;border-radius:8px;border:2px solid #ccc">
-            <source src="VIDEOS/welcome.mp4" type="video/mp4">
-            <source src="assets/welcome.mp4" type="video/mp4">
-            <source src="VIDEOS/20251016_234551.mp4" type="video/mp4">
-            <p>Video not supported. Please check if the video file exists and is in the correct format.</p>
-          </video>
-          <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--muted)">If video doesn't load, try refreshing the page or check your browser's video support.</p>
-        </div>
-      </div>
-
-      <div style="flex:1">
-        <div class="card" style="padding:2rem;min-height:600px">
-          <h3>My Hobbies</h3>
-          <div class="grid" style="margin-top:1.5rem">
-            <div class="card" style="padding:1.5rem">
-              <img src="IMAGES/20250616_185103.jpg" alt="cars hobby" style="width:100%;height:250px;object-fit:contain;border-radius:8px;margin-bottom:1rem">
-              <h4 style="margin-bottom:0.5rem">Cars & Vehicles</h4>
-              <p>I have a strong interest in vehicles such as cars and motorcycles, here is a photo of my car. I go to lots of car meets and love learning about engines as well as different brands of vehicles.</p>
-            </div>
-            <div class="card" style="padding:1.5rem">
-              <img src="IMAGES/image000001(3).jpg" alt="fishing hobby" style="width:100%;height:250px;object-fit:contain;border-radius:8px;margin-bottom:1rem">
-              <h4 style="margin-bottom:0.5rem">Fishing</h4>
-              <p>I also love to fish, I've fished in places like Hawaii and the Rocky Mountains for all different kinds of species.</p>
+        <div class="hero-right">
+          <div class="hero-card">
+            <h1>Welcome — Luke Ridgeway</h1>
+            <div class="cta-group">
+              <a href="resume.html" class="cta">View Resume</a>
+              <a href="career.html" class="cta cta-secondary">Career Interests</a>
             </div>
           </div>
+
+          <section class="profile-info">
+            <h2>About Me</h2>
+            <p>I'm Luke Ridgeway, a 19-year-old student at the University of Minnesota Duluth pursuing business and finance studies. I'm passionate about learning, personal growth, and exploring new opportunities. My interests span across automotive technology, outdoor recreation, and financial management. I believe in continuous improvement and actively seek experiences that challenge me both academically and personally.</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="welcome-media">
+        <article class="media-card">
+          <h2>My Welcome Video</h2>
+          <iframe width="100%" height="300" src="https://www.youtube.com/embed/MNlOESSCBys" title="Welcome Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </article>
+      </section>
+    </article>
+
+    <article class="hobbies-preview">
+      <h2>My Hobbies</h2>
+      <p class="lead">Here are some of my favorite interests and pastimes.</p>
+      <div class="hobbies-grid">
+        <div class="hobby-card">
+          <img src="IMAGES/20250616_185103.jpg" alt="Luke's 2006 Acura TL at a car meet" class="hobby-image" loading="lazy">
+          <h3>Cars & Vehicles</h3>
+          <p>I have a strong interest in vehicles such as cars and motorcycles. I attend car meets regularly and love learning about engines and different automotive brands. This is my personal 2006 Acura TL which I've modified with new wheels.</p>
+        </div>
+        <div class="hobby-card">
+          <img src="IMAGES/image000001(3).jpg" alt="Luke holding a crappie fish caught in Minnesota" class="hobby-image fishing-image" loading="lazy">
+          <h3>Fishing</h3>
+          <p>I'm passionate about fishing and have had the opportunity to fish in diverse locations including Hawaii and the Rocky Mountains for various species, such as trout and crappie like the one seen in this photo.</p>
         </div>
       </div>
-    </section>
+      <p class="view-more"><a href="hobbies.html">View all hobbies →</a></p>
+    </article>
 
-    <section style="margin-top:1.5rem">
-      <div class="card">
-        <h3>Contact</h3>
-        <p>Email: <a href="mailto:ridge067@d.umn.edu">ridge067@d.umn.edu</a></p>
-      </div>
-    </section>
+    <article class="contact-section">
+      <h2>Get In Touch</h2>
+      <p>Feel free to reach out to me via email for any inquiries, opportunities, or just to connect.</p>
+      <address>
+        Email: <a href="mailto:ridge067@d.umn.edu">ridge067@d.umn.edu</a>
+      </address>
+    </article>
   </main>
 
-  <footer>
+  <footer role="contentinfo">
     <div class="container">
-      <p style="color:var(--muted)">© Luke Ridgeway — Built with HTML/CSS/JS</p>
+      <div class="footer-content">
+        <p>&copy; 2025 Luke Ridgeway. All rights reserved.</p>
+        <p>Built with HTML5, CSS3, and JavaScript</p>
+      </div>
     </div>
   </footer>
 </body>
